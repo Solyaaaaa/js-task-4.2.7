@@ -3,57 +3,65 @@ const repositoryList = document.querySelector('.repository_list')
 const repositories = document.querySelector('.repository')
 
 
-// Массив куда сохраняется 5 репозиториев из гита
+
 let arrRepository = []
+let time
 
 
-//асинхронная функция, которая получает данные с сервера и сохраняет их в массив
-//вызывает функцию, в которой генерируется всплывающий список
+
 async function searchRepository(){
-    let item = inputElement.value.trim()
-    if(item.length === 0) {
-        repositoryList.textContent = ''
-        return
+    const enteredValue = inputElement.value.trim()
+    
+    if(enteredValue.length === 0) {
+        setData([])
+        return;
     }
 
-
-    let data = await fetch(`https://api.github.com/search/repositories?q=${inputElement.value}`)
-    try {
-    let response = await data.json()
-    repositoryList.textContent = ''
-    arrRepository = response.items.slice(0, 5)
-    arrRepository.forEach(repository => {
-       createRepository(repository)
-    });
-
-    
-    } catch (error) {
-        console.log(error);
-        
+    let timeNow = new Date().getTime();
+    time = timeNow
+    const data = await fetch(`https://api.github.com/search/repositories?q=${inputElement.value}`)
+    if(time === timeNow){
+        try {
+            const response = await data.json()
+            setData(response.items.slice(0, 5)) 
+        } catch (error) {
+            console.log(error);  
+        }
     }
 }
 
+function setData(newArr) {
+    arrRepository = newArr
+    if(newArr.length > 0){    
+        createListRepository(arrRepository)
 
-//Функция в которой генерируется всплывающий список под инпутом
-// и вешается слушатель на элемент списка при нажатии 
-
-//  функция которая вызывается после клика по элементу из списка репозиториев
-// сравнивает нажатый элемент с элементами массива и возвращает обьект из массива
-// очищает все поля после нажатия
-
-function createRepository(repository) {      
-        const repositoryElem = createElementList('li','repository_elem', repository.name)
-        repositoryList.append(repositoryElem)
-
-        repositoryElem.addEventListener('click', function () {
-            let repo = arrRepository.find(item => item.name === repository.name)
-        createCard(repo)
-
-        inputElement.value = ''
-        repositoryList.textContent = ''
-        
-        });
+        return
     }
+
+    repositoryList.textContent = ''
+    
+}
+
+function createListRepository(arr) {
+    repositoryList.textContent = ''
+
+    for (let i = 0; i < arr.length; i++) {
+        if(arr.length > 0){       
+            const repositoryElem = createElementList('li','repository_elem', arr[i].name)
+            repositoryList.append(repositoryElem)
+
+            repositoryElem.addEventListener('click', function () {
+                let repo = arrRepository.find(item => item.name === arr[i].name)
+                createCard(repo)
+
+                inputElement.value = ''
+                setData([])
+            })
+
+        } 
+    }
+}
+
 
 function createCard(repository) {
     const repositoryCard = createElementList('ul', 'repository_card')
