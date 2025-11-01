@@ -1,0 +1,128 @@
+body{
+    background-color: #2F435A;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.app {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+/* Инпут */
+.search_div {
+ position: relative;
+ height: 100%;
+ 
+}
+
+.search_input{
+    outline:none;
+    width: 300px;
+    height: 20px;
+    border: 4px solid #E9B1A3;
+    padding: 8px;
+    border-radius: 4px;
+    appearance: none;
+    color: #E9B1A3;
+    font-size: 18px;
+    background-color:#2F435A;
+    
+   
+}
+
+/* Список под инпутом */
+.repository_list{
+list-style: none;
+display: flex;
+flex-direction: column;
+margin: 0;
+padding-left: 0;
+position: absolute;
+border-radius: 4px;
+width: 100%;
+background-color: #E9B1A3;
+
+}
+.repository_elem{
+align-content: center;
+cursor: pointer;
+padding: 8px;
+height: 100%;
+border-top: 3px solid #2F435A;
+color: #2F435A;
+transition: background-color 0.3s, transform 0.2s;
+
+}
+.repository_elem:hover{
+background-color: #f6c0b3;
+
+}
+.repository_elem:active{
+background-color: #f6c0b3;
+
+}
+
+
+/* Контейнер для карточек */
+.repository {
+display: flex;
+flex-direction: column;
+margin-top: 200px;
+
+}
+
+.repository_card {
+padding: 0;
+margin: 5px;
+list-style: none;
+display: flex;
+flex-direction: column;
+position: relative;
+width: 300px;
+background-color: #E9B1A3;
+
+}
+.repository_desc{
+    padding: 5px;
+    color: #2F435A;
+    
+}
+button{
+    background-color: #E9B1A3;
+    position: absolute;
+    right: 8px;
+    bottom: 25px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border: 4px solid #2F435A;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:before,
+button:after {
+    content: "";
+    position: absolute;
+    right: 3px;
+    width: 26px;
+    height: 4px;
+    background: #2F435A;
+}
+
+button:before {
+    transform: rotate(45deg);
+}
+
+button:after {
+    transform: rotate(-45deg);
+}
+
+button:hover{
+background-color: #f6c0b3;
+
+}
+button:active{
+background-color: #f6c0b3;
+}
